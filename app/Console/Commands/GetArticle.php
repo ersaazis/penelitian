@@ -6,7 +6,6 @@ use Illuminate\Console\Command;
 use Storage;
 use App\DataKeyword;
 
-
 class GetArticle extends Command
 {
     /**
@@ -44,6 +43,11 @@ class GetArticle extends Command
         $DK=DataKeyword::find($id);
         if($DK){
             $data = file_get_contents($DK->url);
+            $data = strip_tags($data,"<style>");
+            $substring = substr($data,strpos($data,"<style"),strpos($data,"</style>")+2);
+            $data = str_replace($substring,"",$data);
+            $data = str_replace(array("\t","\r","\n"),"",$data);
+            $data = trim($data);
             $fileName='scrap/'.md5(time().rand(1111,9999)).'.html';
             Storage::disk('local')->put($fileName, $data);
             $DK->file='app/'.$fileName;

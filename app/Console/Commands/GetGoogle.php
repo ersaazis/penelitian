@@ -8,6 +8,7 @@ use Serps\HttpClient\CurlClient;
 use Serps\SearchEngine\Google\GoogleUrl;
 use Serps\Core\Browser\Browser;
 use Serps\SearchEngine\Google\NaturalResultType;
+use Artisan;
 use App\Keyword;
 use App\DataKeyword;
 
